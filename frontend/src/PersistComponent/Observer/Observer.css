@@ -1,0 +1,68 @@
+.observer-page {
+  background-color: white;
+  color: black;
+  padding: 2rem;
+  margin: 0 15%;
+}
+
+.observer-content {
+  display: flex;
+  gap: 2rem;
+}
+
+.observer-image {
+  width: 80%;
+  height: 50%;
+}
+
+.stock-box {
+  background-color: aquamarine;
+  padding: 1rem;
+  border-radius: 8px;
+  color: black;
+}
+
+.stock-actions {
+  margin-top: 1rem;
+}
+
+.stock-quantity {
+  width: 100%;
+  padding: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.sell-button {
+  background-color: darkslategray;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.sell-button:hover {
+  background-color: darkcyan;
+}
+
+.total-price {
+  margin-top: 1rem;
+}
+
+.transactions-table {
+  margin-top: 2rem;
+  width: 100%;
+  overflow-x: auto;
+}
+
+.transactions-table table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.transactions-table th,
+.transactions-table td {
+  padding: 0.5rem;
+  text-align: left;
+  border-bottom: 1px solid aquamarine;
+}

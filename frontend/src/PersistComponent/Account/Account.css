@@ -1,0 +1,64 @@
+.account-page {
+  background-color: white;
+  color: black;
+  padding: 2rem;
+  margin: 0 15%;
+}
+
+.account-heading {
+  color: aquamarine;
+  font-size: 2rem;
+}
+
+.account-tagline {
+  color: darkslategray;
+  font-size: 1.2rem;
+}
+
+.info-boxes {
+  display: flex;
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.info-box {
+  background-color: aquamarine;
+  padding: 1rem;
+  border-radius: 8px;
+  flex: 1;
+}
+
+.info-row {
+  margin-bottom: 1rem;
+  color: black;
+}
+
+.balance-value,
+.token-value {
+  font-weight: bold;
+}
+
+.navigation-bar {
+  margin-top: 2rem;
+  background-color: aquamarine;
+  padding: 1rem;
+  border-radius: 8px;
+}
+
+.transactions-table {
+  margin-top: 2rem;
+  width: 100%;
+  overflow-x: auto;
+}
+
+.transactions-table table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.transactions-table th,
+.transactions-table td {
+  padding: 0.5rem;
+  text-align: left;
+  border-bottom: 1px solid aquamarine;
+}

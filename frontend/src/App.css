@@ -1,38 +1,22 @@
-.App {
-  text-align: center;
+.app {
+  font-family: Arial, sans-serif;
+  background-color: black;
+  color: white;
+  padding-top: 60px; /* Adjusted for fixed navigation bar height */
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.main-content {
+  padding: 15% 15%; /* Added padding for main content */
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+/* Additional CSS for each page */
+.account-page, .observer-page, .users-page {
+  background-color: black;
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.account-page h1, .observer-page h1, .users-page h1 {
+  color: aquamarine;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
+/* Other styles... */

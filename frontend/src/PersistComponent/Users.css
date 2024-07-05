@@ -1,0 +1,47 @@
+.users-page {
+  background-color: white;
+  color: black;
+  padding: 2rem;
+  margin: 0 15%;
+}
+
+.user-box {
+  background-color: aquamarine;
+  padding: 1rem;
+  border-radius: 8px;
+  margin-bottom: 2rem;
+}
+
+.buy-token-section,
+.buy-stock-section {
+  margin-top: 1rem;
+}
+
+.buy-token-section select,
+.buy-stock-section select {
+  width: 100%;
+  padding: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.buy-token-section input,
+.buy-stock-section input {
+  width: 100%;
+  padding: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.buy-token-section button,
+.buy-stock-section button {
+  background-color: darkslategray;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.buy-token-section button:hover,
+.buy-stock-section button:hover {
+  background-color: darkcyan;
+}

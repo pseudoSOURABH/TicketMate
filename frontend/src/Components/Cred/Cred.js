@@ -221,8 +221,7 @@ const Cred = () => {
                         <div className="content">
                             <h3>New here ?</h3>
                             <p>
-                                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Debitis,
-                                ex ratione. Aliquid!
+                               Rovolutioning your journey of ordinary ticket purchasing 
                             </p>
                             <button className="btn transparent" id="sign-up-btn" onClick={() => { setIsSignUpMode(true) }}>
                                 Sign up
@@ -234,8 +233,7 @@ const Cred = () => {
                         <div className="content">
                             <h3>One of us ?</h3>
                             <p>
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum
-                                laboriosam ad deleniti.
+                            Rovolutioning your journey of ordinary ticket purchasing 
                             </p>
                             <button className="btn transparent" id="sign-in-btn" onClick={() => { setIsSignUpMode(false) }}>
                                 Sign in

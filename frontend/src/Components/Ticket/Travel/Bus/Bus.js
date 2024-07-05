@@ -53,7 +53,7 @@ const Bus = (props) => {
    
   }
     return (
-  <TicketContext.Provider value={{total_tckts ,settotal_tckts}}>
+  <TicketContext.Provider value={[total_tckts ,settotal_tckts]}>
     {props.children}
           <div id='Bus'>
             <div className='Bus'>

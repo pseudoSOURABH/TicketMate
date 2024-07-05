@@ -1,14 +1,14 @@
 import React, { useContext, useState } from 'react'
 import TicketCard from '../mini_comp/TicketCard/TicketCard'
 import TicketContext from '../../TicketContext/TicketContext'
-// import {total_tckts,settotal_tckts} from '../Ticket/Travel/Bus/Bus';
+import {total_tckts,settotal_tckts} from '../Ticket/Travel/Bus/Bus';
 
 
 
 const Profile = () => {
   const context = useContext(TicketContext);
   if (context === undefined) {
-    throw new Error("The useNotesContext hook must be used inside a NoteContext.Provider!");
+    throw new Error("The TicketContext hook must be used inside a NoteContext.Provider!");
     return context;
   }
   const total_tckts = context;
