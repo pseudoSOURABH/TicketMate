@@ -2,14 +2,67 @@
   background-color: white;
   color: black;
   padding: 2rem;
-  margin: 0 15%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .user-box {
-  background-color: aquamarine;
+  background-color: rgb(34, 252, 179);;
   padding: 1rem;
   border-radius: 8px;
   margin-bottom: 2rem;
+  width: 90%; /* Increased width to make the row wider */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.user-box h2 {
+  margin-top: 0;
+}
+
+.card-row {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.card {
+  background-color: white;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 32%; /* Adjusted width to make cards fit within the wider row */
+  margin-right: 1.5%; /* Adjusted space between cards */
+}
+
+.card:last-child {
+  margin-right: 0; /* Remove margin from the last card */
+}
+
+.card h3 {
+  margin-top: 0;
+}
+
+.card table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1rem;
+}
+
+.card th,
+.card td {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+.card th {
+  background-color: darkslategray;
+  color: white;
+}
+
+.card td {
+  background-color: #f2f2f2;
 }
 
 .buy-token-section,
@@ -18,17 +71,14 @@
 }
 
 .buy-token-section select,
-.buy-stock-section select {
-  width: 100%;
-  padding: 0.5rem;
-  margin-bottom: 1rem;
-}
-
+.buy-stock-section select,
 .buy-token-section input,
 .buy-stock-section input {
   width: 100%;
   padding: 0.5rem;
   margin-bottom: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
 }
 
 .buy-token-section button,
@@ -39,9 +89,45 @@
   padding: 0.5rem 1rem;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  width: 100%;
+  border-radius: 4px;
 }
 
 .buy-token-section button:hover,
 .buy-stock-section button:hover {
   background-color: darkcyan;
+}
+
+.popup {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background-color: #4caf50;
+  color: white;
+  padding: 15px;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  animation: fadein 0.5s, fadeout 0.5s 2.5s;
+}
+
+@keyframes fadein {
+  from {
+    opacity: 0;
+    top: 0;
+  }
+  to {
+    opacity: 1;
+    top: 20px;
+  }
+}
+
+@keyframes fadeout {
+  from {
+    opacity: 1;
+    top: 20px;
+  }
+  to {
+    opacity: 0;
+    top: 0;
+  }
 }

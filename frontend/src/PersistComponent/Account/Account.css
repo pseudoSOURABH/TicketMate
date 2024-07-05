@@ -2,63 +2,162 @@
   background-color: white;
   color: black;
   padding: 2rem;
-  margin: 0 15%;
+  margin: 0 auto;
+  max-width: 1200px;
 }
 
 .account-heading {
-  color: aquamarine;
+  color:  rgb(0, 248, 165);;
   font-size: 2rem;
+  text-align: center;
 }
 
 .account-tagline {
   color: darkslategray;
   font-size: 1.2rem;
+  text-align: center;
 }
 
-.info-boxes {
+.admin-section {
   display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
   gap: 2rem;
-  margin-top: 2rem;
+  margin-bottom: 2rem;
 }
 
-.info-box {
-  background-color: aquamarine;
+.funds-table {
+  background-color:  rgb(0, 248, 165); /* Darker aquamarine */
   padding: 1rem;
   border-radius: 8px;
-  flex: 1;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 25%;
+  min-width: 200px;
 }
 
-.info-row {
+.funds-table table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.funds-table th,
+.funds-table td {
+  border: none;
+  padding: 0.5rem;
+  text-align: center; /* Center-align entries */
+}
+
+.funds-table th {
+  background-color: rgb(0, 248, 165);;
+  color: white;
+}
+
+.funds-table td {
+  background-color: #f2f2f2;
+}
+
+.holdings-table {
+  background-color: white;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 75%;
+}
+
+.holdings-table table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.holdings-table th,
+.holdings-table td {
+  border: 1px solid #dfdfdf;
+  padding: 0.5rem;
+  text-align: center; /* Center-align entries */
+  background-color: whitesmoke;
+}
+
+.holdings-table th {
+  background-color:  rgb(0, 248, 165);;
+  color: white;
+}
+
+.holdings-table td {
+  background-color:whitesmoke;
+}
+
+.transactions-section {
+  width: 100%;
+}
+
+.transactions-heading {
+  font-size: 1.5rem;
+  color: darkslategray;
   margin-bottom: 1rem;
-  color: black;
-}
-
-.balance-value,
-.token-value {
-  font-weight: bold;
-}
-
-.navigation-bar {
-  margin-top: 2rem;
-  background-color: aquamarine;
-  padding: 1rem;
-  border-radius: 8px;
+  text-align: center; /* Center-align heading */
 }
 
 .transactions-table {
-  margin-top: 2rem;
   width: 100%;
   overflow-x: auto;
+  margin-top: 2rem;
 }
 
 .transactions-table table {
   width: 100%;
   border-collapse: collapse;
+  margin-bottom: 1rem;
+  border-radius: 8px; /* Apply border-radius */
+  overflow: hidden; /* Ensures border radius applies to the table */
 }
 
 .transactions-table th,
 .transactions-table td {
+  border: 1px solid #ddd;
   padding: 0.5rem;
-  text-align: left;
-  border-bottom: 1px solid aquamarine;
+  text-align: center; /* Center-align entries */
+}
+
+.transactions-table th {
+  background-color:rgb(0, 248, 165);
+  color: white;
+}
+
+.transactions-table td {
+  background-color: #f2f2f2;
+}
+
+@media (max-width: 768px) {
+  .account-page {
+    padding: 1rem;
+  }
+
+  .admin-section {
+    flex-direction: column;
+  }
+
+  .funds-table,
+  .holdings-table {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .account-heading {
+    font-size: 1.5rem;
+  }
+
+  .account-tagline {
+    font-size: 1rem;
+  }
+
+  .transactions-heading {
+    font-size: 1.2rem;
+  }
+
+  .funds-table th, .funds-table td, 
+  .holdings-table th, .holdings-table td, 
+  .transactions-table th, .transactions-table td {
+    padding: 0.25rem;
+  }
 }

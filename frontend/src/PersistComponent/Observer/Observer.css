@@ -2,67 +2,71 @@
   background-color: white;
   color: black;
   padding: 2rem;
-  margin: 0 15%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .observer-content {
   display: flex;
-  gap: 2rem;
+  flex-direction: column;
+  align-items: center;
+  width: 80%;
+  gap: 0.5rem; /* Very minor space between image and table */
+  margin-bottom: 2rem;
 }
 
 .observer-image {
-  width: 80%;
-  height: 50%;
-}
-
-.stock-box {
-  background-color: aquamarine;
-  padding: 1rem;
-  border-radius: 8px;
-  color: black;
-}
-
-.stock-actions {
-  margin-top: 1rem;
-}
-
-.stock-quantity {
   width: 100%;
-  padding: 0.5rem;
-  margin-bottom: 1rem;
-}
-
-.sell-button {
-  background-color: darkslategray;
-  color: white;
-  border: none;
-  padding: 0.5rem 1rem;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.sell-button:hover {
-  background-color: darkcyan;
-}
-
-.total-price {
-  margin-top: 1rem;
+  height: auto;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
 }
 
 .transactions-table {
-  margin-top: 2rem;
-  width: 100%;
+  width: 100%; /* Ensure the table takes the full width of its container */
   overflow-x: auto;
+  margin-top: 0.5rem; /* Ensure minimal space between the image and table */
 }
 
 .transactions-table table {
   width: 100%;
   border-collapse: collapse;
+  border-radius: 8px; /* Apply border-radius */
+  overflow: hidden; /* Ensures border radius applies to the table */
 }
 
 .transactions-table th,
 .transactions-table td {
+  border: 1px solid #ddd;
   padding: 0.5rem;
-  text-align: left;
-  border-bottom: 1px solid aquamarine;
+}
+
+.transactions-table table thead th {
+  background-color: rgb(0, 248, 165);
+  color: white;
+}
+
+.transactions-table td {
+  background-color: rgb(0, 248, 165);
+}
+
+.transactions-table table thead tr {
+  background-color: rgb(0, 248, 165);
+  color: white;
+}
+
+@media (max-width: 768px) {
+  .observer-content {
+    width: 100%;
+  }
+
+  .observer-image {
+    width: 100%;
+  }
+
+  .transactions-table {
+    width: 100%;
+  }
 }
