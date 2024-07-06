@@ -6,13 +6,13 @@ import './Users.css'
 function Users() {
   const dispatch = useDispatch()
   const users = useSelector((state) => state.users)
+  const stockPrices = useSelector((state) => state.stockPrices)
   const [selectedStock, setSelectedStock] = useState('Apple')
   const [tokenAmount, setTokenAmount] = useState(0)
   const [stockAmount, setStockAmount] = useState(0)
   const [popupMessage, setPopupMessage] = useState('')
   const [showPopup, setShowPopup] = useState(false)
 
-  // Assuming you're only using the first user
   const user = users[0]
 
   const handleBuyToken = () => {
@@ -24,7 +24,16 @@ function Users() {
           amount: Number(tokenAmount),
         })
       )
-      setTokenAmount(0) // Reset token amount after purchase
+      setTokenAmount(0)
+      if (selectedStock === 'Hero') {
+        setPopupMessage(
+          `Admin Bought: ${tokenAmount} Hero Token<br/>User Bought: ${tokenAmount} Hero Solana`
+        )
+      } else {
+        setPopupMessage(`User Bought: ${tokenAmount} ${selectedStock} Solana`)
+      }
+      setShowPopup(true)
+      setTimeout(() => setShowPopup(false), 3000)
     } else {
       alert('Insufficient balance to buy tokens.')
     }
@@ -41,8 +50,14 @@ function Users() {
             amount: Number(stockAmount),
           })
         )
-        setStockAmount(0) // Reset stock amount after purchase
-        setPopupMessage(`Bought ${stockAmount} ${selectedStock} stocks`)
+        setStockAmount(0)
+        if (selectedStock === 'Hero') {
+          setPopupMessage(
+            `Admin Sold: ${stockAmount} Hero Token<br/>User Bought: ${stockAmount} Hero Token`
+          )
+        } else {
+          setPopupMessage(`User Bought: ${stockAmount} ${selectedStock} Solana`)
+        }
         setShowPopup(true)
         setTimeout(() => setShowPopup(false), 3000)
       } else {
@@ -59,11 +74,11 @@ function Users() {
           <p>Remaining Balance: {user.balance}</p>
           <div className="card-row">
             <div className="card">
-              <h3>Token Holdings</h3>
+              <h3>Solana Holdings</h3>
               <table>
                 <thead>
                   <tr>
-                    <th>Token</th>
+                    <th>Solana</th>
                     <th>Quantity</th>
                   </tr>
                 </thead>
@@ -98,22 +113,11 @@ function Users() {
             </div>
             <div className="card">
               <div className="buy-token-section">
-                <h3>Buy Tokens</h3>
+                <h3>Buy Solana</h3>
                 <select onChange={(e) => setSelectedStock(e.target.value)}>
-                  {[
-                    'Apple',
-                    'Tesla',
-                    'Bitcoin',
-                    'Salenium',
-                    'Reliance',
-                    'Google',
-                    'NASDAQ',
-                    'Amazon',
-                    'Dogcoin',
-                    'Either',
-                  ].map((stock) => (
+                  {Object.keys(stockPrices).map((stock) => (
                     <option key={stock} value={stock}>
-                      {stock}
+                      {stock} - ${stockPrices[stock]}
                     </option>
                   ))}
                 </select>
@@ -123,25 +127,14 @@ function Users() {
                   value={tokenAmount}
                   onChange={(e) => setTokenAmount(e.target.value)}
                 />
-                <button onClick={handleBuyToken}>Buy Token</button>
+                <button onClick={handleBuyToken}>Buy Solana</button>
               </div>
               <div className="buy-stock-section">
                 <h3>Buy Stocks</h3>
                 <select onChange={(e) => setSelectedStock(e.target.value)}>
-                  {[
-                    'Apple',
-                    'Tesla',
-                    'Bitcoin',
-                    'Salenium',
-                    'Reliance',
-                    'Google',
-                    'NASDAQ',
-                    'Amazon',
-                    'Dogcoin',
-                    'Either',
-                  ].map((stock) => (
+                  {Object.keys(stockPrices).map((stock) => (
                     <option key={stock} value={stock}>
-                      {stock}
+                      {stock} - ${stockPrices[stock]}
                     </option>
                   ))}
                 </select>
@@ -152,14 +145,19 @@ function Users() {
                   onChange={(e) => setStockAmount(e.target.value)}
                 />
                 <button onClick={handleBuyStockWithToken}>
-                  Buy Stock with Token
+                  Buy Stock with Solana
                 </button>
               </div>
             </div>
           </div>
         </div>
       )}
-      {showPopup && <div className="popup">{popupMessage}</div>}
+      {showPopup && (
+        <div
+          className="popup"
+          dangerouslySetInnerHTML={{ __html: popupMessage }}
+        />
+      )}
     </div>
   )
 }

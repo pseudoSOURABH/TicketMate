@@ -16,9 +16,11 @@ function Observer() {
       const dateA = new Date(a.timestamp)
       const dateB = new Date(b.timestamp)
 
+      // First compare timestamps
       if (dateA.getTime() === dateB.getTime()) {
-        if (a.userId === 'User1' && b.userId !== 'User1') return -1
-        if (a.userId !== 'User1' && b.userId === 'User1') return 1
+        // If timestamps are the same, check if one is an admin transaction
+        if (a.userId === 'admin' && b.userId !== 'admin') return -1
+        if (a.userId !== 'admin' && b.userId === 'admin') return 1
       }
 
       return dateB - dateA
@@ -57,7 +59,7 @@ function Observer() {
             <tbody>
               {allTransactions.map((tx, index) => (
                 <tr key={index}>
-                  <td>{tx.type === 'Admin Buy Stock' ? 'Admin' : tx.userId}</td>
+                  <td>{tx.type.startsWith('Admin') ? 'Admin' : tx.userId}</td>
                   <td>{tx.type}</td>
                   <td>{tx.stock}</td>
                   <td>{tx.amount}</td>

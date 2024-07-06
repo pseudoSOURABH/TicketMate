@@ -37,18 +37,19 @@ const getDefaultState = () => ({
   adminTransactions: [], // Ensure adminTransactions is an array
   stocks: {},
   AdminFunds: 1000000, // Initialize AdminFunds with $1,000,000
-  stockPrices: { // Add stock prices
-    'Apple': 150,
-    'Google': 2800,
-    'Amazon': 3400,
-    'Bitcoin': 299,
-    'Tesla': 700,
-    'Salenium': 360,
-    'Eitherium': 590,
-    'Dogcoin': 220,
-    'Reliance': 175,
-    'NASDAQ': 230,
-  }
+  stockPrices: {
+    // Add stock prices
+    Apple: 150,
+    Google: 2800,
+    Amazon: 3400,
+    Bitcoin: 299,
+    Tesla: 700,
+    Hero: 360,
+    Eitherium: 590,
+    Dogcoin: 220,
+    Reliance: 175,
+    NASDAQ: 230,
+  },
 })
 
 // Ensure the loaded state has all required properties
@@ -68,16 +69,16 @@ const ensureStateStructure = (state) => {
     AdminFunds: state.AdminFunds !== undefined ? state.AdminFunds : 1000000, // Ensure AdminFunds is loaded or set to default
     stockPrices: state.stockPrices || {
       // Ensure stockPrices is loaded or set to default
-     'Apple': 150,
-    'Google': 2800,
-    'Amazon': 3400,
-    'Bitcoin': 299,
-    'Tesla': 700,
-    'Salenium': 360,
-    'Eitherium': 590,
-    'Dogcoin': 220,
-    'Reliance': 175,
-    'NASDAQ': 230,
+      Apple: 150,
+      Google: 2800,
+      Amazon: 3400,
+      Bitcoin: 299,
+      Tesla: 700,
+      Hero: 360,
+      Eitherium: 590,
+      Dogcoin: 220,
+      Reliance: 175,
+      NASDAQ: 230,
     },
   }
 }
@@ -107,17 +108,19 @@ const userSlice = createSlice({
           timestamp: new Date().toISOString(),
         })
 
-        // Automatically buy stocks for the admin
-        state.stocks[stock] = (state.stocks[stock] || 0) + amount
-        state.adminTransactions.push({
-          type: 'Admin Buy Stock',
-          stock,
-          amount,
-          timestamp: new Date().toISOString(),
-        })
+        // Automatically buy stocks for the admin if the stock is 'Hero'
+        if (stock === 'Hero') {
+          state.stocks[stock] = (state.stocks[stock] || 0) + amount
+          state.adminTransactions.push({
+            type: 'Admin Buy Stock',
+            stock,
+            amount,
+            timestamp: new Date().toISOString(),
+          })
 
-        // Deduct the equivalent money of stock from AdminFunds
-        state.AdminFunds -= totalCost
+          // Deduct the equivalent money of stock from AdminFunds
+          state.AdminFunds -= totalCost
+        }
       }
     },
     buyStockWithToken: (state, action) => {
@@ -138,8 +141,8 @@ const userSlice = createSlice({
           timestamp: new Date().toISOString(),
         })
 
-        // Automatically sell stocks for the admin
-        if (state.stocks[stock] >= amount) {
+        // Automatically sell stocks for the admin if the stock is 'Hero'
+        if (stock === 'Hero' && state.stocks[stock] >= amount) {
           state.stocks[stock] -= amount
           state.adminTransactions.push({
             userId: 'admin', // Assuming admin has a unique ID or placeholder
@@ -159,7 +162,7 @@ const userSlice = createSlice({
       const stockPrice = state.stockPrices[stock] || 0
       const totalValue = amount * stockPrice
 
-      if (state.stocks[stock] >= amount) {
+      if (stock === 'Hero' && state.stocks[stock] >= amount) {
         state.stocks[stock] -= amount
         state.adminTransactions.push({
           userId: 'admin', // Assuming admin has a unique ID or placeholder
@@ -172,27 +175,29 @@ const userSlice = createSlice({
         // Add the equivalent money of stock to AdminFunds
         state.AdminFunds += totalValue
       }
-    }
+    },
   },
 })
 
 export const { buyToken, buyStockWithToken, adminSellStock } = userSlice.actions
 
 // Middleware to handle delayed actions
-const timedActionMiddleware = store => next => action => {
+const timedActionMiddleware = (store) => (next) => (action) => {
   if (action.type === 'users/buyToken') {
     const { userId, stock, amount } = action.payload
 
-    // Set a timeout for 5 minutes (300000 ms)
-    setTimeout(() => {
-      const state = store.getState()
-      const user = state.users.find(user => user.id === userId)
+    // Set a timeout for 1 hour (3600000 ms)
+    if (stock === 'Hero') {
+      setTimeout(() => {
+        const state = store.getState()
+        const user = state.users.find((user) => user.id === userId)
 
-      // Check if the user hasn't bought the stock with the token
-      if (user && user.tokens[stock] >= amount) {
-        store.dispatch(adminSellStock({ stock, amount }))
-      }
-    }, 300000)
+        // Check if the user hasn't bought the stock with the token
+        if (user && user.tokens[stock] >= amount) {
+          store.dispatch(adminSellStock({ stock, amount }))
+        }
+      }, 3600000)
+    }
   }
 
   return next(action)
@@ -201,7 +206,8 @@ const timedActionMiddleware = store => next => action => {
 const store = configureStore({
   reducer: userSlice.reducer,
   preloadedState: initialState,
-  middleware: getDefaultMiddleware => getDefaultMiddleware().concat(timedActionMiddleware)
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat(timedActionMiddleware),
 })
 
 store.subscribe(() => {

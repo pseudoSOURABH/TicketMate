@@ -125,7 +125,7 @@ function Account() {
       </div>
 
       <div className="transactions-section">
-        <h2>Token Transactions</h2>
+        <h2>Solana Transactions</h2>
         <div className="transactions-table">
           <table>
             <thead>
