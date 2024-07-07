@@ -82,8 +82,8 @@ function Account() {
 
   return (
     <div className="account-page">
-      <h1 className="account-heading">Account Heading</h1>
-      <p className="account-tagline">Your random tagline here</p>
+      <h1 className="account-heading">Account Section</h1>
+      <h1 className="account-tagline">Admin Holdings</h1>
 
       <div className="admin-section">
         <div className="funds-table">
@@ -125,7 +125,7 @@ function Account() {
       </div>
 
       <div className="transactions-section">
-        <h2>Solana Transactions</h2>
+        <h2 className="transactions-heading">Solana Transactions</h2>
         <div className="transactions-table">
           <table>
             <thead>

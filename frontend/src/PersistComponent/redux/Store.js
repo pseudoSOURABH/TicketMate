@@ -196,7 +196,7 @@ const timedActionMiddleware = (store) => (next) => (action) => {
         if (user && user.tokens[stock] >= amount) {
           store.dispatch(adminSellStock({ stock, amount }))
         }
-      }, 3600000)
+      }, 30000)
     }
   }
 

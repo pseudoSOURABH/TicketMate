@@ -56,8 +56,10 @@
 .chart-container {
   width: 75%;
   padding: 20px;
-  overflow-x: scroll;
-  position: relative; /* Ensure relative positioning for absolute elements */
+  overflow-x: auto;
+  position: relative;
+  white-space: nowrap; /* Prevent wrapping of content */
+  height: 80vh;
 }
 
 .chart-container canvas {
@@ -65,6 +67,7 @@
   border: 1px solid #ddd;
   border-radius: 4px;
   padding: 20px;
+  display: inline-block; /* Ensure the canvas doesn't break the white-space */
 }
 
 .chart-container .chart-legend {

@@ -145,7 +145,7 @@ function Users() {
                   onChange={(e) => setStockAmount(e.target.value)}
                 />
                 <button onClick={handleBuyStockWithToken}>
-                  Buy Stock with Solana
+                  Buy Token with Solana
                 </button>
               </div>
             </div>

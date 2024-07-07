@@ -20,10 +20,10 @@ const strategies = {
 }
 
 const initialChartData = {
-  labels: Array.from({ length: 60 }, (_, i) => i + 1),
+  labels: [new Date().toLocaleTimeString()],
   datasets: initialStocks.map((stock) => ({
     label: stock.name,
-    data: Array.from({ length: 60 }, () => stock.price),
+    data: [stock.price],
     borderColor: `#${Math.floor(Math.random() * 16777215).toString(16)}`,
     fill: false,
   })),
@@ -33,8 +33,11 @@ const Stock = () => {
   const [stocks, setStocks] = useState(initialStocks)
   const [selectedStock, setSelectedStock] = useState(initialStocks[0].name)
   const [chartData, setChartData] = useState(initialChartData)
+  const [zoomLevel, setZoomLevel] = useState(60) // Initial zoom level
   const prevPrices = useRef(initialStocks.map((stock) => stock.price))
   const chartRef = useRef(null)
+  const containerRef = useRef(null)
+  const lastUpdateTime = useRef(new Date())
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -51,37 +54,46 @@ const Stock = () => {
 
   useEffect(() => {
     const updateChartData = () => {
-      setChartData((prevData) => ({
-        ...prevData,
-        datasets: prevData.datasets.map((dataset, index) => {
+      setChartData((prevData) => {
+        const newLabels = [...prevData.labels]
+        const currentTime = new Date()
+        if (
+          currentTime - lastUpdateTime.current >= 5 * 60 * 1000 ||
+          newLabels.length === 1
+        ) {
+          newLabels.push(currentTime.toLocaleTimeString())
+          lastUpdateTime.current = currentTime
+        } else {
+          newLabels.push('')
+        }
+        const newDatasets = prevData.datasets.map((dataset) => {
           const stock = stocks.find((stock) => stock.name === dataset.label)
-          dataset.data.push(stock.price)
-          if (dataset.data.length > 60) dataset.data.shift()
-          return dataset
-        }),
-      }))
+          const newData = [...dataset.data, stock.price]
+          if (newData.length > zoomLevel) newData.shift()
+          return {
+            ...dataset,
+            data: newData,
+          }
+        })
+        if (newLabels.length > zoomLevel) newLabels.shift()
+        return {
+          labels: newLabels,
+          datasets: newDatasets,
+        }
+      })
     }
 
     updateChartData()
 
-    // Scroll chart to the right to show recent data
-    if (chartRef.current) {
-      chartRef.current.chartInstance.data.labels = chartData.labels
-      chartRef.current.chartInstance.update('none')
-      const chartContainer =
-        chartRef.current.chartInstance.chart.canvas.parentNode
-      chartContainer.scrollLeft =
-        chartContainer.scrollWidth - chartContainer.clientWidth
+    if (chartRef.current && chartRef.current.chartInstance) {
+      const chartInstance = chartRef.current.chartInstance
+      chartInstance.update()
     }
-  }, [stocks])
+  }, [stocks, zoomLevel])
 
   const handleStockSelect = (stockName) => {
     setSelectedStock(stockName)
   }
-
-  const selectedDataset = chartData.datasets.find(
-    (dataset) => dataset.label === selectedStock
-  )
 
   const stockMovementColor = (currentPrice, prevPrice) => {
     if (currentPrice > prevPrice) {
@@ -91,6 +103,25 @@ const Stock = () => {
     }
     return 'black'
   }
+
+  const handleWheel = (event) => {
+    event.preventDefault()
+    if (event.deltaY > 0) {
+      setZoomLevel((prevZoom) => Math.min(prevZoom + 10, 300))
+    } else {
+      setZoomLevel((prevZoom) => Math.max(prevZoom - 10, 10))
+    }
+  }
+
+  useEffect(() => {
+    if (containerRef.current) {
+      containerRef.current.scrollLeft = containerRef.current.scrollWidth
+    }
+  }, [chartData])
+
+  const selectedDataset = chartData.datasets.find(
+    (dataset) => dataset.label === selectedStock
+  )
 
   return (
     <div className="stock-container">
@@ -118,7 +149,11 @@ const Stock = () => {
             </div>
           ))}
         </div>
-        <div className="chart-container">
+        <div
+          className="chart-container"
+          ref={containerRef}
+          onWheel={handleWheel}
+        >
           {selectedDataset && (
             <Line
               ref={chartRef}
@@ -129,10 +164,10 @@ const Stock = () => {
               options={{
                 scales: {
                   x: {
-                    type: 'linear',
+                    type: 'category',
                     position: 'bottom',
                     ticks: {
-                      autoSkip: true,
+                      autoSkip: false,
                       maxTicksLimit: 10,
                     },
                   },
@@ -140,6 +175,10 @@ const Stock = () => {
                     beginAtZero: false,
                   },
                 },
+                animation: {
+                  duration: 0,
+                },
+                maintainAspectRatio: false,
               }}
             />
           )}
